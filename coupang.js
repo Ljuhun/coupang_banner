@@ -13,9 +13,9 @@ function checkTimeAndUpdate() {
 
   if (currentTime - startTime >= limit_time) {
     // 변수 업데이트
-    slide_target_url_main = "https://example.com/target-link";
+    slide_target_url_nmd = "https://example.com/target-link";
 
-    // console.log(slide_target_url_main); // 확인용
+    // console.log(slide_target_url_nmd); // 확인용
     clearInterval(interval); // 반복 중지
   }
 }
@@ -35,35 +35,35 @@ let slide_bubble_svg = `<svg width="80" height="40" viewBox="0 0 80 40" fill="no
 <path d="M5 5C5 2.23858 7.23858 0 10 0H70C72.7614 0 75 2.23858 75 5V20C75 22.7614 72.7614 25 70 25H15L5 35V5Z" fill="#DC2626"/>
 </svg>`;
 
-let slide_point_main =
-  typeof location_numer_main !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main)
+let slide_point_nmd =
+  typeof location_numer_nmd !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd)
     : undefined;
-let slide_point_main_2a =
-  typeof location_numer_main_2a !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main_2a)
+let slide_point_nmd_2a =
+  typeof location_numer_nmd_2a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd_2a)
     : undefined;
-let slide_point_main_3a =
-  typeof location_numer_main_3a !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main_3a)
+let slide_point_nmd_3a =
+  typeof location_numer_nmd_3a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd_3a)
     : undefined;
 
 let slide_bannerHTML = `
 			<div>&nbsp;</div>
-			<div class="banner-container-main" >
-					<div class="slide-shop-banner-back-main" >
-							<img src="${slide_back_img_main}" alt="Icon">
+			<div class="banner-container-nmd" >
+					<div class="slide-shop-banner-back-nmd" >
+							<img src="${slide_back_img_nmd}" alt="Icon">
 					</div>
-					<div class="slide-shop-banner-front-main">
-							<img class="front-img-main" src="${slide_front_img_main}" alt="Icon">
+					<div class="slide-shop-banner-front-nmd">
+							<img class="front-img-nmd" src="${slide_front_img_nmd}" alt="Icon">
 
-							<div class="slide-shop-banner-top-right-main bubble active" onclick="event.stopPropagation();">
+							<div class="slide-shop-banner-top-right-nmd bubble active" onclick="event.stopPropagation();">
 								<div class="bubble-svg-container">${slide_bubble_svg}</div>
-								<div class="bubble-txt-main">당겨주세요!</div>
+								<div class="bubble-txt-nmd">당겨주세요!</div>
 							</div>
 								
-							<div class="slide-shop-banner-rightbox-main arw">
-									<div class="slide-shop-banner-rightbox-arrow-main">
+							<div class="slide-shop-banner-rightbox-nmd arw">
+									<div class="slide-shop-banner-rightbox-arrow-nmd">
 											<div class="arrow-svg-container">${slide_arrow_svg}</div>
 									</div>
 							</div>
@@ -75,8 +75,8 @@ let slide_bannerHTML = `
 
 for (var i = 0; i < paragraphCount; i++) {
   if (
-    typeof slide_point_main !== "undefined" &&
-    i === Math.floor(slide_point_main)
+    typeof slide_point_nmd !== "undefined" &&
+    i === Math.floor(slide_point_nmd)
   ) {
     var bannerWrapper = document.createElement("div");
     bannerWrapper.innerHTML = slide_bannerHTML;
@@ -84,8 +84,8 @@ for (var i = 0; i < paragraphCount; i++) {
   }
 
   if (
-    typeof slide_point_main_2a !== "undefined" &&
-    i === Math.floor(slide_point_main_2a)
+    typeof slide_point_nmd_2a !== "undefined" &&
+    i === Math.floor(slide_point_nmd_2a)
   ) {
     const bannerWrapper = document.createElement("div");
     bannerWrapper.innerHTML = slide_bannerHTML;
@@ -93,8 +93,8 @@ for (var i = 0; i < paragraphCount; i++) {
   }
 
   if (
-    typeof slide_point_main_3a !== "undefined" &&
-    i === Math.floor(slide_point_main_3a)
+    typeof slide_point_nmd_3a !== "undefined" &&
+    i === Math.floor(slide_point_nmd_3a)
   ) {
     const bannerWrapper = document.createElement("div");
     bannerWrapper.innerHTML = slide_bannerHTML;
@@ -102,8 +102,8 @@ for (var i = 0; i < paragraphCount; i++) {
   }
 }
 
-document.querySelectorAll(".banner-container-main").forEach((banner) => {
-  const bubbleText = banner.querySelector(".bubble-txt-main");
+document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
+  const bubbleText = banner.querySelector(".bubble-txt-nmd");
   let isWhite = true;
 
   // Bubble text animation
@@ -112,7 +112,7 @@ document.querySelectorAll(".banner-container-main").forEach((banner) => {
     isWhite = !isWhite;
   }, 1000);
 
-  const foreground = banner.querySelector(".slide-shop-banner-front-main");
+  const foreground = banner.querySelector(".slide-shop-banner-front-nmd");
   let direction = -1;
   let position = -50;
   let moveCount = 0;
@@ -165,7 +165,7 @@ document.querySelectorAll(".banner-container-main").forEach((banner) => {
       foreground.style.left = `${position}px`;
 
       if (position < -180) {
-        window.location.href = slide_target_url_main;
+        window.location.href = slide_target_url_nmd;
       }
     }
   });
@@ -192,7 +192,7 @@ document.querySelectorAll(".banner-container-main").forEach((banner) => {
       if (position < -180) {
         isDragging = false; // 드래그 비활성화
 
-        const banners = document.querySelectorAll(".banner-container-main");
+        const banners = document.querySelectorAll(".banner-container-nmd");
 
         if (!banners.length) return; // 배너가 없으면 함수 종료
 
@@ -230,7 +230,7 @@ document.querySelectorAll(".banner-container-main").forEach((banner) => {
             setTimeout(() => {
               banner.style.transform = "translateX(-50%) scale(1)"; // 원래 크기로 복귀
               fadeOverlay.remove(); // 오버레이 제거
-              if (index === 0) window.location.href = slide_target_url_main; // 첫 번째 배너에서만 이동 실행
+              if (index === 0) window.location.href = slide_target_url_nmd; // 첫 번째 배너에서만 이동 실행
             }, 300);
           }, 0);
         });
