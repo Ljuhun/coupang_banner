@@ -1,0 +1,145 @@
+.banner-container-main {
+  position: relative;
+  width: 300px;
+  height: 250px;
+  cursor: pointer;
+  overflow: hidden;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slide-shop-banner-back-main {
+  position: absolute;
+  width: 300px;
+  height: 250px;
+  background-color: grey;
+  overflow: hidden;
+}
+
+.slide-shop-banner-back-main img,
+.front-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.front-img-main {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.slide-shop-banner-front-main {
+  position: absolute;
+  width: 300px;
+  height: 250px;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  z-index: 2;
+  left: -50px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  cursor: grab;
+}
+
+.slide-shop-banner-top-right-main {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  transform: translate(50%, 0);
+  width: auto;
+  height: auto;
+}
+
+.slide-shop-banner-front-main:active {
+  cursor: grabbing;
+}
+
+.slide-shop-banner-top-right-main img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.bubble-svg-container {
+  position: relative;
+  display: block;
+  width: 80px;
+  height: 40px;
+  z-index: 1;
+}
+
+.bubble-svg-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slide-shop-banner-rightbox-main {
+  position: absolute;
+  width: 50px;
+  height: 150px;
+  z-index: 3;
+  top: 50%;
+  right: -25px;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+}
+
+.slide-shop-banner-rightbox-arrow-main {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: orange;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.arrow-svg-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.arrow-svg-container svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.slide-shop-banner-rightbox-arrow-main img {
+  width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.bubble-txt-main {
+  position: absolute;
+  top: 36%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  z-index: 2;
+  transition: color 0.5s ease;
+  white-space: nowrap;
+}

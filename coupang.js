@@ -1,0 +1,479 @@
+// 현재 시간(초 단위) 가져오기
+function getCurrentTimestamp() {
+  return Math.floor(Date.now() / 1000);
+}
+
+// 최초 방문 시 시간 기록
+let startTime = getCurrentTimestamp();
+
+// 10초 후 자동으로 변수 대입하는 함수
+function checkTimeAndUpdate() {
+  let currentTime = getCurrentTimestamp();
+  let limit_time = 10; // 10초 후 실행
+
+  if (currentTime - startTime >= limit_time) {
+    // 변수 업데이트
+    slide_target_url_main = "https://example.com/target-link";
+
+    // console.log(slide_target_url_main); // 확인용
+    clearInterval(interval); // 반복 중지
+  }
+}
+
+// 1초마다 체크하여 10초 후 자동 업데이트
+let interval = setInterval(checkTimeAndUpdate, 1000);
+
+// // 현재 시간(초 단위) 가져오기
+// function getCurrentTimestamp() {
+//     return Math.floor(Date.now() / 1000);
+// }
+
+// // 로컬 스토리지에 값 저장
+// function slide_main_setLocalStorage(key, value) {
+//     localStorage.setItem(key, value);
+// }
+
+// // 로컬 스토리지에서 값 가져오기
+// function slide_main_getLocalStorage(key) {
+//     return localStorage.getItem(key);
+// }
+
+// // 최초 방문 시 처리
+// let savedTimestamp = slide_main_getLocalStorage("trialUsed_a");
+// let currentTime = getCurrentTimestamp();
+
+// if (!savedTimestamp) {
+//     // 처음 방문한 경우 'trialUsed_a'를 설정하고, 현재 시간 기록
+//     slide_main_setLocalStorage("trialUsed_a", "1");
+//     slide_main_setLocalStorage("time_set", currentTime);
+
+//     // alert("처음 방문");
+// }
+// else {
+//     // 저장된 시간과 현재 시간 비교
+//     // 10초 = 10, 1분 = 60, 10분 = 600, 1시간 = 3600,
+//     // 3시간 = 10800, 12시간 = 43200, 1일 = 86400
+
+//     let limit_time = 10;
+
+//     let savedTime = parseInt(slide_main_getLocalStorage("time_set"), limit_time);
+//     if (currentTime - savedTime >= limit_time) {
+
+//         slide_target_url_main = "https://example.com/target-link";
+
+//         // 10초 경과 후 'trialUsed_b'를 설정
+//         if (!slide_main_getLocalStorage("trialUsed_b")) {
+//             slide_main_setLocalStorage("trialUsed_b", "1");
+
+//             // alert("trialUsed_b가 설정됨");
+//         }
+//     }
+// }
+
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 프리미엄
+
+// 	if (typeof window.charset_language_options === 'undefined' || window.charset_language_options !== "UTF-8") {
+// 			slide_target_url_main = "https://www.example.com";
+// 			// slide_target_url_main = "https://example.com/shop"; //쇼핑몰
+// 	}
+
+let paragraphs = document.querySelectorAll(".tt_article_useless_p_margin p");
+
+let paragraphCount = paragraphs.length;
+
+let slide_arrow_svg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 19L8 12L15 5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+let slide_bubble_svg = `<svg width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 5C5 2.23858 7.23858 0 10 0H70C72.7614 0 75 2.23858 75 5V20C75 22.7614 72.7614 25 70 25H15L5 35V5Z" fill="#DC2626"/>
+</svg>`;
+
+let slide_point_main =
+  typeof location_numer_main !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_main)
+    : undefined;
+let slide_point_main_2a =
+  typeof location_numer_main_2a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_main_2a)
+    : undefined;
+let slide_point_main_3a =
+  typeof location_numer_main_3a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_main_3a)
+    : undefined;
+
+let slide_bannerHTML = `
+			<div>&nbsp;</div>
+			<div class="banner-container-main" >
+					<div class="slide-shop-banner-back-main" >
+							<img src="${slide_back_img_main}" alt="Icon">
+					</div>
+					<div class="slide-shop-banner-front-main">
+							<img class="front-img-main" src="${slide_front_img_main}" alt="Icon">
+
+							<div class="slide-shop-banner-top-right-main bubble active" onclick="event.stopPropagation();">
+								<div class="bubble-svg-container">${slide_bubble_svg}</div>
+								<div class="bubble-txt-main">당겨주세요!</div>
+							</div>
+								
+							<div class="slide-shop-banner-rightbox-main arw">
+									<div class="slide-shop-banner-rightbox-arrow-main">
+											<div class="arrow-svg-container">${slide_arrow_svg}</div>
+									</div>
+							</div>
+					</div>
+			</div>
+			<div><br><br>이 포스팅은 제휴 마케팅 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받을 수 있습니다.</div>
+			<div>&nbsp;</div>
+	`;
+
+for (var i = 0; i < paragraphCount; i++) {
+  if (
+    typeof slide_point_main !== "undefined" &&
+    i === Math.floor(slide_point_main)
+  ) {
+    var bannerWrapper = document.createElement("div");
+    bannerWrapper.innerHTML = slide_bannerHTML;
+    paragraphs[i].insertAdjacentElement("afterend", bannerWrapper);
+  }
+
+  if (
+    typeof slide_point_main_2a !== "undefined" &&
+    i === Math.floor(slide_point_main_2a)
+  ) {
+    const bannerWrapper = document.createElement("div");
+    bannerWrapper.innerHTML = slide_bannerHTML;
+    paragraphs[i].insertAdjacentElement("afterend", bannerWrapper);
+  }
+
+  if (
+    typeof slide_point_main_3a !== "undefined" &&
+    i === Math.floor(slide_point_main_3a)
+  ) {
+    const bannerWrapper = document.createElement("div");
+    bannerWrapper.innerHTML = slide_bannerHTML;
+    paragraphs[i].insertAdjacentElement("afterend", bannerWrapper);
+  }
+}
+
+document.querySelectorAll(".banner-container-main").forEach((banner) => {
+  //수정
+
+  const bubbleText = banner.querySelector(".bubble-txt-main");
+  let isWhite = true;
+
+  // Bubble text animation
+  setInterval(() => {
+    bubbleText.style.color = isWhite ? "grey" : "white";
+    isWhite = !isWhite;
+  }, 1000);
+
+  const foreground = banner.querySelector(".slide-shop-banner-front-main");
+  let direction = -1;
+  let position = -50;
+  let moveCount = 0;
+  let acceleration = 0;
+  let isDragging = false;
+  let dragStart = 0;
+  let isPaused = false;
+
+  function animate() {
+    if (!isPaused) {
+      if (moveCount < 4) {
+        if (direction === 1) {
+          acceleration += 0.05;
+          position += 1.5 + acceleration;
+          if (position >= -60) {
+            direction = -1;
+            moveCount++;
+            acceleration = 0;
+          }
+        } else {
+          position -= 0.7;
+          if (position <= -160) {
+            direction = 1;
+            moveCount++;
+            acceleration = 0;
+          }
+        }
+        foreground.style.left = `${position}px`;
+        requestAnimationFrame(animate);
+      } else {
+        setTimeout(() => {
+          moveCount = 0;
+          requestAnimationFrame(animate);
+        }, 1000);
+      }
+    }
+  }
+
+  // Mouse events
+  foreground.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    dragStart = e.clientX - position;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      position = e.clientX - dragStart;
+      position = Math.min(Math.max(position, -190), -60);
+      foreground.style.left = `${position}px`;
+
+      if (position < -180) {
+        window.location.href = slide_target_url_main;
+      }
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  // Mobile touch events
+  foreground.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    dragStart = touch.clientX - position;
+    e.preventDefault();
+  });
+
+  document.addEventListener("touchmove", (e) => {
+    if (isDragging) {
+      const touch = e.touches[0];
+      position = touch.clientX - dragStart;
+      position = Math.min(Math.max(position, -190), -60);
+      foreground.style.left = `${position}px`;
+
+      if (position < -180) {
+        isDragging = false; // 드래그 비활성화
+
+        const banners = document.querySelectorAll(".banner-container-main");
+
+        if (!banners.length) return; // 배너가 없으면 함수 종료
+
+        banners.forEach((banner, index) => {
+          // 기존 오버레이 제거 후 다시 추가 (중복 방지)
+          let existingOverlay = banner.querySelector(".fade-overlay");
+          if (existingOverlay) existingOverlay.remove();
+
+          // 새로운 오버레이 생성
+          let fadeOverlay = document.createElement("div");
+          fadeOverlay.classList.add("fade-overlay");
+          Object.assign(fadeOverlay.style, {
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(255, 255, 255, 1)",
+            zIndex: "1100",
+            transition: "opacity 0.3s ease",
+          });
+          banner.appendChild(fadeOverlay);
+
+          // 배너 애니메이션 효과 적용
+          Object.assign(banner.style, {
+            transition: "transform 0.3s ease, left 0.3s ease",
+            left: `50%`, // 각 배너의 위치를 조금씩 다르게 설정
+            transform: "translateX(-50%) scale(0.9)",
+          });
+
+          // 0.3초 후 오버레이 점점 사라짐 & 사이트 이동
+          setTimeout(() => {
+            fadeOverlay.style.opacity = "0"; // 오버레이 투명화
+
+            setTimeout(() => {
+              banner.style.transform = "translateX(-50%) scale(1)"; // 원래 크기로 복귀
+              fadeOverlay.remove(); // 오버레이 제거
+              if (index === 0) window.location.href = slide_target_url_main; // 첫 번째 배너에서만 이동 실행
+            }, 300);
+          }, 0);
+        });
+      }
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    isDragging = false;
+  });
+
+  foreground.addEventListener("mouseenter", () => {
+    isPaused = true;
+  });
+
+  foreground.addEventListener("mouseleave", () => {
+    isPaused = false;
+    animate();
+  });
+
+  // Start animation
+  animate();
+});
+
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기본형
+
+// // if (typeof window.charset_language_options === 'undefined' || window.charset_language_options !== "UTF-8") {
+// //     slide_target_url_main = "https://www.example.com";
+
+// //     // slide_target_url_main = "https://example.com/shop"; //쇼핑몰
+// // }
+
+// document.querySelectorAll('.banner-container-main').forEach((banner, index) => {
+
+// if (index === 0) {
+
+//   const bubbleText = banner.querySelector('.bubble-txt-main');
+//   let isWhite = true;
+
+//   // Bubble text animation
+//   setInterval(() => {
+//     bubbleText.style.color = isWhite ? 'grey' : 'white';
+//     isWhite = !isWhite;
+//   }, 1000);
+
+//   const foreground = banner.querySelector('.slide-shop-banner-front-main');
+//   let direction = -1;
+//   let position = -50;
+//   let moveCount = 0;
+//   let acceleration = 0;
+//   let isDragging = false;
+//   let dragStart = 0;
+//   let isPaused = false;
+
+//   function animate() {
+//     if (!isPaused) {
+//       if (moveCount < 4) {
+//         if (direction === 1) {
+//           acceleration += 0.05;
+//           position += 1.5 + acceleration;
+//           if (position >= -60) {
+//             direction = -1;
+//             moveCount++;
+//             acceleration = 0;
+//           }
+//         } else {
+//           position -= 0.7;
+//           if (position <= -160) {
+//             direction = 1;
+//             moveCount++;
+//             acceleration = 0;
+//           }
+//         }
+//         foreground.style.left = `${position}px`;
+//         requestAnimationFrame(animate);
+//       } else {
+//         setTimeout(() => {
+//           moveCount = 0;
+//           requestAnimationFrame(animate);
+//         }, 1000);
+//       }
+//     }
+//   }
+
+//   // Mouse events
+//   foreground.addEventListener('mousedown', (e) => {
+//     isDragging = true;
+//     dragStart = e.clientX - position;
+//     e.preventDefault();
+//   });
+
+//   document.addEventListener('mousemove', (e) => {
+//     if (isDragging) {
+//       position = e.clientX - dragStart;
+//       position = Math.min(Math.max(position, -190), -60);
+//       foreground.style.left = `${position}px`;
+
+//       if (position < -180) {
+//         window.location.href = slide_target_url_main;
+//         }
+//     }
+//   });
+
+//   document.addEventListener('mouseup', () => {
+//     isDragging = false;
+//   });
+
+//   // Mobile touch events
+//   foreground.addEventListener('touchstart', (e) => {
+//     isDragging = true;
+//     const touch = e.touches[0];
+//     dragStart = touch.clientX - position;
+//     e.preventDefault();
+//   });
+
+//   document.addEventListener('touchmove', (e) => {
+//     if (isDragging) {
+//       const touch = e.touches[0];
+//       position = touch.clientX - dragStart;
+//       position = Math.min(Math.max(position, -190), -60);
+//       foreground.style.left = `${position}px`;
+
+//     if (position < -180) {
+//         isDragging = false; // 드래그 비활성화
+
+//         const banners = document.querySelectorAll('.banner-container-main');
+
+//         if (!banners.length) return; // 배너가 없으면 함수 종료
+
+//         banners.forEach((banner, index) => {
+//             // 기존 오버레이 제거 후 다시 추가 (중복 방지)
+//             let existingOverlay = banner.querySelector('.fade-overlay');
+//             if (existingOverlay) existingOverlay.remove();
+
+//             // 새로운 오버레이 생성
+//             let fadeOverlay = document.createElement('div');
+//             fadeOverlay.classList.add('fade-overlay');
+//             Object.assign(fadeOverlay.style, {
+//                 position: 'absolute',
+//                 top: '0',
+//                 left: '0',
+//                 width: '100%',
+//                 height: '100%',
+//                 backgroundColor: 'rgba(255, 255, 255, 1)',
+//                 zIndex: '1100',
+//                 transition: 'opacity 0.3s ease'
+//             });
+//             banner.appendChild(fadeOverlay);
+
+//             // 배너 애니메이션 효과 적용
+//             Object.assign(banner.style, {
+//                 transition: 'transform 0.3s ease, left 0.3s ease',
+//                 left: `50%`, // 각 배너의 위치를 조금씩 다르게 설정
+//                 transform: 'translateX(-50%) scale(0.9)'
+//             });
+
+//             // 0.3초 후 오버레이 점점 사라짐 & 사이트 이동
+//             setTimeout(() => {
+//                 fadeOverlay.style.opacity = '0'; // 오버레이 투명화
+
+//                 setTimeout(() => {
+//                     banner.style.transform = 'translateX(-50%) scale(1)'; // 원래 크기로 복귀
+//                     fadeOverlay.remove(); // 오버레이 제거
+//                     if (index === 0) window.location.href = slide_target_url_main; // 첫 번째 배너에서만 이동 실행
+//                 }, 300);
+
+//             }, 0);
+//         });
+//     }
+//     }
+//   });
+
+//   document.addEventListener('touchend', () => {
+//     isDragging = false;
+//   });
+
+//   foreground.addEventListener('mouseenter', () => {
+//     isPaused = true;
+//   });
+
+//   foreground.addEventListener('mouseleave', () => {
+//     isPaused = false;
+//     animate();
+//   });
+
+//   // Start animation
+//   animate();
+
+//     } //if
+// });
