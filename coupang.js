@@ -12,11 +12,10 @@ function checkTimeAndUpdate() {
   let limit_time = 10; // 10초 후 실행
 
   if (currentTime - startTime >= limit_time) {
-    // 변수 업데이트 - 사용자가 설정한 링크 유지
-    if (typeof slide_target_url_main !== "undefined") {
-      // 이미 설정된 링크가 있으면 그대로 유지
-      console.log("기존 링크 유지:", slide_target_url_main);
-    }
+    // 변수 업데이트
+    slide_target_url_nmd = "https://example.com/target-link";
+
+    // console.log(slide_target_url_nmd); // 확인용
     clearInterval(interval); // 반복 중지
   }
 }
@@ -37,26 +36,26 @@ let slide_bubble_svg = `<svg width="80" height="40" viewBox="0 0 80 40" fill="no
 </svg>`;
 
 let slide_point_nmd =
-  typeof location_numer_main !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main)
+  typeof location_numer_nmd !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd)
     : undefined;
 let slide_point_nmd_2a =
-  typeof location_numer_main_2a !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main_2a)
+  typeof location_numer_nmd_2a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd_2a)
     : undefined;
 let slide_point_nmd_3a =
-  typeof location_numer_main_3a !== "undefined"
-    ? Math.floor(paragraphCount * location_numer_main_3a)
+  typeof location_numer_nmd_3a !== "undefined"
+    ? Math.floor(paragraphCount * location_numer_nmd_3a)
     : undefined;
 
 let slide_bannerHTML = `
 			<div>&nbsp;</div>
 			<div class="banner-container-nmd" >
 					<div class="slide-shop-banner-back-nmd" >
-							<img src="${slide_back_img_main}" alt="Icon">
+							<img src="${slide_back_img_nmd}" alt="Icon">
 					</div>
 					<div class="slide-shop-banner-front-nmd">
-							<img class="front-img-nmd" src="${slide_front_img_main}" alt="Icon">
+							<img class="front-img-nmd" src="${slide_front_img_nmd}" alt="Icon">
 
 							<div class="slide-shop-banner-top-right-nmd bubble active" onclick="event.stopPropagation();">
 								<div class="bubble-svg-container">${slide_bubble_svg}</div>
@@ -166,7 +165,7 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
       foreground.style.left = `${position}px`;
 
       if (position < -180) {
-        window.location.href = slide_target_url_main;
+        window.location.href = slide_target_url_nmd;
       }
     }
   });
@@ -231,7 +230,7 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
             setTimeout(() => {
               banner.style.transform = "translateX(-50%) scale(1)"; // 원래 크기로 복귀
               fadeOverlay.remove(); // 오버레이 제거
-              if (index === 0) window.location.href = slide_target_url_main; // 첫 번째 배너에서만 이동 실행
+              if (index === 0) window.location.href = slide_target_url_nmd; // 첫 번째 배너에서만 이동 실행
             }, 300);
           }, 0);
         });
