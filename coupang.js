@@ -13,7 +13,8 @@ function checkTimeAndUpdate() {
 
   if (currentTime - startTime >= limit_time) {
     // 변수 업데이트
-    slide_target_url_nmd = "https://example.com/target-link";
+    // 링크 이동 url
+    slide_target_url_nmd = slide_target_url_main;
 
     // console.log(slide_target_url_nmd); // 확인용
     clearInterval(interval); // 반복 중지
@@ -254,3 +255,4 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
   // Start animation
   animate();
 });
+
