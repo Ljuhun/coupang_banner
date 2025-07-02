@@ -166,11 +166,11 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
 
   document.addEventListener("mousemove", (e) => {
     if (isDragging) {
-      // 상하좌우 조금만 드래그해도 이동
+      // 상하좌우 아주 조금만 드래그해도 이동 (모바일과 동일하게)
       let deltaX = Math.abs(e.clientX - mouseStartX);
       let deltaY = Math.abs(e.clientY - mouseStartY);
 
-      if (deltaX > 15 || deltaY > 15) {
+      if (deltaX > 5 || deltaY > 5) {
         window.location.href = slide_target_url_nmd;
         return;
       }
