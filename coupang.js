@@ -153,44 +153,69 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
   }
 
   // Mouse events
+  let mouseStartX = 0;
+  let mouseStartY = 0;
+
   foreground.addEventListener("mousedown", (e) => {
     isDragging = true;
     dragStart = e.clientX - position;
+    mouseStartX = e.clientX;
+    mouseStartY = e.clientY;
     e.preventDefault();
   });
 
   document.addEventListener("mousemove", (e) => {
     if (isDragging) {
+      // 상하좌우 조금만 드래그해도 이동
+      let deltaX = Math.abs(e.clientX - mouseStartX);
+      let deltaY = Math.abs(e.clientY - mouseStartY);
+
+      if (deltaX > 15 || deltaY > 15) {
+        window.location.href = slide_target_url_nmd;
+        return;
+      }
+
       position = e.clientX - dragStart;
       position = Math.min(Math.max(position, -190), -60);
       foreground.style.left = `${position}px`;
-
-      if (position < -180) {
-        window.location.href = slide_target_url_nmd;
-      }
     }
   });
 
-  document.addEventListener("mouseup", () => {
+  document.addEventListener("mouseup", (e) => {
+    if (isDragging) {
+      // 클릭으로 인식 (시작 위치와 거의 같은 위치에서 마우스업)
+      let deltaX = Math.abs(e.clientX - mouseStartX);
+      let deltaY = Math.abs(e.clientY - mouseStartY);
+
+      if (deltaX <= 5 && deltaY <= 5) {
+        window.location.href = slide_target_url_nmd;
+      }
+    }
     isDragging = false;
   });
 
   // Mobile touch events
+  let touchStartX = 0;
+  let touchStartY = 0;
+
   foreground.addEventListener("touchstart", (e) => {
     isDragging = true;
     const touch = e.touches[0];
     dragStart = touch.clientX - position;
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
     e.preventDefault();
   });
 
   document.addEventListener("touchmove", (e) => {
     if (isDragging) {
       const touch = e.touches[0];
-      position = touch.clientX - dragStart;
-      position = Math.min(Math.max(position, -190), -60);
-      foreground.style.left = `${position}px`;
 
-      if (position < -180) {
+      // 상하좌우 조금만 드래그해도 이동
+      let deltaX = Math.abs(touch.clientX - touchStartX);
+      let deltaY = Math.abs(touch.clientY - touchStartY);
+
+      if (deltaX > 15 || deltaY > 15) {
         isDragging = false; // 드래그 비활성화
 
         const banners = document.querySelectorAll(".banner-container-nmd");
@@ -235,11 +260,71 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
             }, 300);
           }, 0);
         });
+        return;
       }
+
+      position = touch.clientX - dragStart;
+      position = Math.min(Math.max(position, -190), -60);
+      foreground.style.left = `${position}px`;
     }
   });
 
-  document.addEventListener("touchend", () => {
+  document.addEventListener("touchend", (e) => {
+    if (isDragging) {
+      // 터치로 인식 (시작 위치와 거의 같은 위치에서 터치 종료)
+      const touch = e.changedTouches[0];
+      let deltaX = Math.abs(touch.clientX - touchStartX);
+      let deltaY = Math.abs(touch.clientY - touchStartY);
+
+      if (deltaX <= 5 && deltaY <= 5) {
+        // 터치 효과와 함께 이동
+        const banners = document.querySelectorAll(".banner-container-nmd");
+
+        if (banners.length) {
+          banners.forEach((banner, index) => {
+            // 기존 오버레이 제거 후 다시 추가 (중복 방지)
+            let existingOverlay = banner.querySelector(".fade-overlay");
+            if (existingOverlay) existingOverlay.remove();
+
+            // 새로운 오버레이 생성
+            let fadeOverlay = document.createElement("div");
+            fadeOverlay.classList.add("fade-overlay");
+            Object.assign(fadeOverlay.style, {
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(255, 255, 255, 1)",
+              zIndex: "1100",
+              transition: "opacity 0.3s ease",
+            });
+            banner.appendChild(fadeOverlay);
+
+            // 배너 애니메이션 효과 적용
+            Object.assign(banner.style, {
+              transition: "transform 0.3s ease, left 0.3s ease",
+              left: `50%`,
+              transform: "translateX(-50%) scale(0.9)",
+            });
+
+            // 0.3초 후 오버레이 점점 사라짐 & 사이트 이동
+            setTimeout(() => {
+              fadeOverlay.style.opacity = "0";
+
+              setTimeout(() => {
+                banner.style.transform = "translateX(-50%) scale(1)";
+                fadeOverlay.remove();
+                if (index === 0) window.location.href = slide_target_url_nmd;
+              }, 300);
+            }, 0);
+          });
+        } else {
+          // 배너가 없으면 바로 이동
+          window.location.href = slide_target_url_nmd;
+        }
+      }
+    }
     isDragging = false;
   });
 
@@ -255,4 +340,3 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
   // Start animation
   animate();
 });
-
