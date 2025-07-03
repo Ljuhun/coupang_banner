@@ -1,60 +1,3 @@
-// 글 목록 페이지에서만 배너를 숨기는 함수
-function isListPage() {
-  // 1. 확실한 글 목록 페이지 body 클래스 확인
-  const body = document.body;
-  const listPageClasses = [
-    "home",
-    "blog",
-    "archive",
-    "category",
-    "tag",
-    "search",
-    "author",
-  ];
-
-  const hasListClass = listPageClasses.some((className) =>
-    body.classList.contains(className)
-  );
-
-  // 2. URL이 루트 도메인이거나 명확한 목록 페이지 URL인지 확인
-  const currentUrl = window.location.href;
-  const isRootUrl =
-    currentUrl.endsWith("/") && currentUrl.split("/").length <= 4;
-
-  // 3. 글 목록 페이지의 확실한 특징 요소 확인
-  const listPageElements = [
-    ".posts-navigation",
-    ".pagination",
-    ".page-numbers",
-    ".nav-links",
-  ];
-
-  const hasListElements = listPageElements.some(
-    (selector) => document.querySelector(selector) !== null
-  );
-
-  // 4. 여러 개의 글 제목이 있는지 확인 (h2, h3 제목이 3개 이상이면 목록 페이지)
-  const titles = document.querySelectorAll("h1, h2, h3");
-  const multipleTitles = titles.length >= 3;
-
-  console.log("배너 표시 체크:", {
-    hasListClass,
-    isRootUrl,
-    hasListElements,
-    multipleTitles,
-    url: currentUrl,
-  });
-
-  // 위 조건 중 하나라도 만족하면 목록 페이지로 판단
-  return hasListClass || isRootUrl || hasListElements || multipleTitles;
-}
-
-// 글 목록 페이지이면 스크립트 실행 중단
-if (isListPage()) {
-  console.log("쿠팡 배너: 글 목록 페이지이므로 배너를 표시하지 않습니다.");
-  return;
-}
-
 // 현재 시간(초 단위) 가져오기
 function getCurrentTimestamp() {
   return Math.floor(Date.now() / 1000);
@@ -81,7 +24,7 @@ function checkTimeAndUpdate() {
 // 1초마다 체크하여 10초 후 자동 업데이트
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
-// 워드프레스 문단 선택자 (테마별로 다를 수 있어 여러 선택자 사용)
+// 포스팅 글에만 배너가 나오도록 설정
 let paragraphs = document.querySelectorAll(
   ".entry-content p, .post-content p, .content p, article p, .wp-block-paragraph, p"
 );
