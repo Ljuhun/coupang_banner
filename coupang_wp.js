@@ -49,28 +49,31 @@ let slide_point_nmd_3a =
     ? Math.floor(paragraphCount * location_numer_nmd_3a)
     : undefined;
 
+let slide_arrow_img_nmd =
+  "https://img.planbplus.co.kr/sliding/img/sliding75/arw.png"; // 화살표 이미지
+
 let slide_bannerHTML = `
 			<div>&nbsp;</div>
 			<div class="banner-container-nmd" >
-					<div class="slide-shop-banner-back-nmd" >
+					<div class="slide-cpng-banner-back-nmd" >
 							<img src="${slide_back_img_nmd}" alt="Icon">
 					</div>
-					<div class="slide-shop-banner-front-nmd">
+					<div class="slide-cpng-banner-front-nmd">
 							<img class="front-img-nmd" src="${slide_front_img_nmd}" alt="Icon">
 
-							<div class="slide-shop-banner-top-right-nmd bubble active" onclick="event.stopPropagation();">
-								<div class="bubble-svg-container">${slide_bubble_svg}</div>
+							<div class="slide-cpng-banner-top-right-nmd bubble active" onclick="event.stopPropagation();">
+								<img src="https://img.planbplus.co.kr/sliding/img/sliding75/ico_pop.png" alt="Icon">
 								<div class="bubble-txt-nmd">당겨주세요!</div>
 							</div>
 								
-							<div class="slide-shop-banner-rightbox-nmd arw">
-									<div class="slide-shop-banner-rightbox-arrow-nmd">
-											<div class="arrow-svg-container">${slide_arrow_svg}</div>
+							<div class="slide-cpng-banner-rightbox-nmd arw">
+									<div class="slide-cpng-banner-rightbox-arrow-nmd">
+											<img src="${slide_arrow_img_nmd}" alt="Arrow">
 									</div>
 							</div>
 					</div>
 			</div>
-			<div><br><br>이 포스팅은 제휴 마케팅 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받을 수 있습니다.</div>
+			<div><br><br>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
 			<div>&nbsp;</div>
 	`;
 
@@ -113,7 +116,7 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
     isWhite = !isWhite;
   }, 1000);
 
-  const foreground = banner.querySelector(".slide-shop-banner-front-nmd");
+  const foreground = banner.querySelector(".slide-cpng-banner-front-nmd");
   let direction = -1;
   let position = -50;
   let moveCount = 0;
@@ -153,69 +156,44 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
   }
 
   // Mouse events
-  let mouseStartX = 0;
-  let mouseStartY = 0;
-
   foreground.addEventListener("mousedown", (e) => {
     isDragging = true;
     dragStart = e.clientX - position;
-    mouseStartX = e.clientX;
-    mouseStartY = e.clientY;
     e.preventDefault();
   });
 
   document.addEventListener("mousemove", (e) => {
     if (isDragging) {
-      // 상하좌우 아주 조금만 드래그해도 이동 (모바일과 동일하게)
-      let deltaX = Math.abs(e.clientX - mouseStartX);
-      let deltaY = Math.abs(e.clientY - mouseStartY);
-
-      if (deltaX > 5 || deltaY > 5) {
-        window.location.href = slide_target_url_nmd;
-        return;
-      }
-
       position = e.clientX - dragStart;
       position = Math.min(Math.max(position, -190), -60);
       foreground.style.left = `${position}px`;
-    }
-  });
 
-  document.addEventListener("mouseup", (e) => {
-    if (isDragging) {
-      // 클릭으로 인식 (시작 위치와 거의 같은 위치에서 마우스업)
-      let deltaX = Math.abs(e.clientX - mouseStartX);
-      let deltaY = Math.abs(e.clientY - mouseStartY);
-
-      if (deltaX <= 5 && deltaY <= 5) {
+      if (position < -180) {
         window.location.href = slide_target_url_nmd;
       }
     }
+  });
+
+  document.addEventListener("mouseup", () => {
     isDragging = false;
   });
 
   // Mobile touch events
-  let touchStartX = 0;
-  let touchStartY = 0;
-
   foreground.addEventListener("touchstart", (e) => {
     isDragging = true;
     const touch = e.touches[0];
     dragStart = touch.clientX - position;
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
     e.preventDefault();
   });
 
   document.addEventListener("touchmove", (e) => {
     if (isDragging) {
       const touch = e.touches[0];
+      position = touch.clientX - dragStart;
+      position = Math.min(Math.max(position, -190), -60);
+      foreground.style.left = `${position}px`;
 
-      // 상하좌우 조금만 드래그해도 이동
-      let deltaX = Math.abs(touch.clientX - touchStartX);
-      let deltaY = Math.abs(touch.clientY - touchStartY);
-
-      if (deltaX > 15 || deltaY > 15) {
+      if (position < -180) {
         isDragging = false; // 드래그 비활성화
 
         const banners = document.querySelectorAll(".banner-container-nmd");
@@ -249,7 +227,7 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
             transform: "translateX(-50%) scale(0.9)",
           });
 
-          // 0.3초 후 오버레이 점점 사라짐 & 사이트 이동
+          // 0.3초 후 오버레이 점점 사라짐 & 네이버 이동
           setTimeout(() => {
             fadeOverlay.style.opacity = "0"; // 오버레이 투명화
 
@@ -260,71 +238,11 @@ document.querySelectorAll(".banner-container-nmd").forEach((banner) => {
             }, 300);
           }, 0);
         });
-        return;
       }
-
-      position = touch.clientX - dragStart;
-      position = Math.min(Math.max(position, -190), -60);
-      foreground.style.left = `${position}px`;
     }
   });
 
-  document.addEventListener("touchend", (e) => {
-    if (isDragging) {
-      // 터치로 인식 (시작 위치와 거의 같은 위치에서 터치 종료)
-      const touch = e.changedTouches[0];
-      let deltaX = Math.abs(touch.clientX - touchStartX);
-      let deltaY = Math.abs(touch.clientY - touchStartY);
-
-      if (deltaX <= 5 && deltaY <= 5) {
-        // 터치 효과와 함께 이동
-        const banners = document.querySelectorAll(".banner-container-nmd");
-
-        if (banners.length) {
-          banners.forEach((banner, index) => {
-            // 기존 오버레이 제거 후 다시 추가 (중복 방지)
-            let existingOverlay = banner.querySelector(".fade-overlay");
-            if (existingOverlay) existingOverlay.remove();
-
-            // 새로운 오버레이 생성
-            let fadeOverlay = document.createElement("div");
-            fadeOverlay.classList.add("fade-overlay");
-            Object.assign(fadeOverlay.style, {
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(255, 255, 255, 1)",
-              zIndex: "1100",
-              transition: "opacity 0.3s ease",
-            });
-            banner.appendChild(fadeOverlay);
-
-            // 배너 애니메이션 효과 적용
-            Object.assign(banner.style, {
-              transition: "transform 0.3s ease, left 0.3s ease",
-              left: `50%`,
-              transform: "translateX(-50%) scale(0.9)",
-            });
-
-            // 0.3초 후 오버레이 점점 사라짐 & 사이트 이동
-            setTimeout(() => {
-              fadeOverlay.style.opacity = "0";
-
-              setTimeout(() => {
-                banner.style.transform = "translateX(-50%) scale(1)";
-                fadeOverlay.remove();
-                if (index === 0) window.location.href = slide_target_url_nmd;
-              }, 300);
-            }, 0);
-          });
-        } else {
-          // 배너가 없으면 바로 이동
-          window.location.href = slide_target_url_nmd;
-        }
-      }
-    }
+  document.addEventListener("touchend", () => {
     isDragging = false;
   });
 
