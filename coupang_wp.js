@@ -24,13 +24,13 @@ function checkTimeAndUpdate() {
 // 1초마다 체크하여 10초 후 자동 업데이트
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
-// 포스팅 글에만 배너가 나오도록 설정 (글 목록 페이지에서는 배너 표시하지 않음)
+// 포스팅 글에만 배너가 나오도록 설정
 if (!document.body.classList.contains("single-post")) {
-  // 포스팅 페이지가 아니면 배너 로직 실행하지 않음
   return;
 }
 
-let paragraphs = document.querySelectorAll("p");
+// 원본 선택자 사용
+let paragraphs = document.querySelectorAll(".tt_article_useless_p_margin p");
 
 let paragraphCount = paragraphs.length;
 
