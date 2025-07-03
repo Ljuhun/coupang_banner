@@ -81,7 +81,10 @@ function checkTimeAndUpdate() {
 // 1초마다 체크하여 10초 후 자동 업데이트
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
-let paragraphs = document.querySelectorAll("p");
+// 워드프레스 문단 선택자 (테마별로 다를 수 있어 여러 선택자 사용)
+let paragraphs = document.querySelectorAll(
+  ".entry-content p, .post-content p, .content p, article p, .wp-block-paragraph, p"
+);
 
 let paragraphCount = paragraphs.length;
 
