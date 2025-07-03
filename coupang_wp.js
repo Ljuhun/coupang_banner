@@ -1,3 +1,19 @@
+// 워드프레스 단일 포스팅에서만 실행하도록 체크
+function isWordPressSinglePost() {
+  // 워드프레스 body 클래스 확인
+  const body = document.body;
+  return (
+    body.classList.contains("single-post") ||
+    body.classList.contains("single") ||
+    body.classList.contains("postid-")
+  );
+}
+
+// 단일 포스팅이 아니면 스크립트 실행 중단
+if (!isWordPressSinglePost()) {
+  return;
+}
+
 // 현재 시간(초 단위) 가져오기
 function getCurrentTimestamp() {
   return Math.floor(Date.now() / 1000);
