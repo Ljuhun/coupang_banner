@@ -30,7 +30,7 @@ if (!document.body.classList.contains("single-post")) {
   return;
 }
 
-let paragraphs = document.querySelectorAll("article p");
+let paragraphs = document.querySelectorAll("p");
 
 let paragraphCount = paragraphs.length;
 
