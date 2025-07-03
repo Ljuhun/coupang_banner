@@ -2,10 +2,9 @@
 function isListPage() {
   const body = document.body;
 
-  // 글 목록 페이지의 확실한 클래스들 확인
+  // 1. 명확한 글 목록 페이지 클래스들만 확인 (blog 클래스 제외)
   const listPageClasses = [
     "home",
-    "blog",
     "archive",
     "category",
     "tag",
@@ -17,14 +16,32 @@ function isListPage() {
     body.classList.contains(className)
   );
 
+  // 2. 단일 포스팅 페이지 클래스 확인
+  const singlePostClasses = ["single-post", "single", "postid-"];
+
+  const hasSingleClass = singlePostClasses.some(
+    (className) =>
+      body.classList.contains(className) ||
+      Array.from(body.classList).some((cls) => cls.startsWith(className))
+  );
+
+  // 3. URL 패턴 확인
+  const currentUrl = window.location.href;
+  const isRootUrl =
+    currentUrl === window.location.origin + "/" ||
+    currentUrl === window.location.origin;
+
   console.log("페이지 타입 체크:", {
-    url: window.location.href,
+    url: currentUrl,
     bodyClasses: Array.from(body.classList),
     hasListClass: hasListClass,
-    isListPage: hasListClass,
+    hasSingleClass: hasSingleClass,
+    isRootUrl: isRootUrl,
+    isListPage: hasListClass || (isRootUrl && !hasSingleClass),
   });
 
-  return hasListClass;
+  // 목록 페이지 클래스가 있거나, 루트 URL이면서 단일 포스팅 클래스가 없으면 목록 페이지
+  return hasListClass || (isRootUrl && !hasSingleClass);
 }
 
 // 글 목록 페이지이면 스크립트 종료
