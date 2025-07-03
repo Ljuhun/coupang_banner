@@ -1,3 +1,40 @@
+// 글 목록 페이지인지 확인 (배너 숨김용)
+function isListPage() {
+  const body = document.body;
+
+  // 글 목록 페이지의 확실한 클래스들 확인
+  const listPageClasses = [
+    "home",
+    "blog",
+    "archive",
+    "category",
+    "tag",
+    "search",
+    "author",
+  ];
+
+  const hasListClass = listPageClasses.some((className) =>
+    body.classList.contains(className)
+  );
+
+  console.log("페이지 타입 체크:", {
+    url: window.location.href,
+    bodyClasses: Array.from(body.classList),
+    hasListClass: hasListClass,
+    isListPage: hasListClass,
+  });
+
+  return hasListClass;
+}
+
+// 글 목록 페이지이면 스크립트 종료
+if (isListPage()) {
+  console.log("🚫 쿠팡 배너: 글 목록 페이지이므로 배너를 표시하지 않습니다.");
+  return;
+}
+
+console.log("✅ 쿠팡 배너: 단일 포스팅 페이지이므로 배너를 표시합니다.");
+
 // 현재 시간(초 단위) 가져오기
 function getCurrentTimestamp() {
   return Math.floor(Date.now() / 1000);
