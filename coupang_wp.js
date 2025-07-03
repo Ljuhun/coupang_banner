@@ -25,9 +25,7 @@ function checkTimeAndUpdate() {
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
 // 포스팅 글에만 배너가 나오도록 설정
-let paragraphs = document.querySelectorAll(
-  ".entry-content p, .post-content p, .content p, article p, .wp-block-paragraph, p"
-);
+let paragraphs = document.querySelectorAll(".tt_article_useless_p_margin p");
 
 let paragraphCount = paragraphs.length;
 
