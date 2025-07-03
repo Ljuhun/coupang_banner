@@ -1,47 +1,58 @@
 // 글 목록 페이지인지 확인 (배너 숨김용)
 function isListPage() {
   const body = document.body;
+  const currentUrl = window.location.href;
 
-  // 1. 명확한 글 목록 페이지 클래스들만 확인 (blog 클래스 제외)
-  const listPageClasses = [
-    "home",
-    "archive",
-    "category",
-    "tag",
-    "search",
-    "author",
-  ];
+  // 모든 디버깅 정보 출력
+  console.log("=== 배너 표시 디버깅 정보 ===");
+  console.log("현재 URL:", currentUrl);
+  console.log("모든 body 클래스:", Array.from(body.classList));
 
-  const hasListClass = listPageClasses.some((className) =>
-    body.classList.contains(className)
+  // 1. 확실한 홈페이지/목록 페이지 확인
+  const isHomePage = body.classList.contains("home");
+  const isArchivePage = body.classList.contains("archive");
+  const isCategoryPage = body.classList.contains("category");
+  const isTagPage = body.classList.contains("tag");
+  const isSearchPage = body.classList.contains("search");
+  const isAuthorPage = body.classList.contains("author");
+
+  console.log("페이지 타입 확인:");
+  console.log("- 홈페이지:", isHomePage);
+  console.log("- 아카이브:", isArchivePage);
+  console.log("- 카테고리:", isCategoryPage);
+  console.log("- 태그:", isTagPage);
+  console.log("- 검색:", isSearchPage);
+  console.log("- 작성자:", isAuthorPage);
+
+  // 2. 단일 포스팅 페이지 확인
+  const isSinglePost = body.classList.contains("single-post");
+  const isSingle = body.classList.contains("single");
+  const hasPostId = Array.from(body.classList).some((cls) =>
+    cls.startsWith("postid-")
   );
 
-  // 2. 단일 포스팅 페이지 클래스 확인
-  const singlePostClasses = ["single-post", "single", "postid-"];
-
-  const hasSingleClass = singlePostClasses.some(
-    (className) =>
-      body.classList.contains(className) ||
-      Array.from(body.classList).some((cls) => cls.startsWith(className))
-  );
+  console.log("단일 포스팅 확인:");
+  console.log("- single-post 클래스:", isSinglePost);
+  console.log("- single 클래스:", isSingle);
+  console.log("- postid- 클래스:", hasPostId);
 
   // 3. URL 패턴 확인
-  const currentUrl = window.location.href;
   const isRootUrl =
     currentUrl === window.location.origin + "/" ||
     currentUrl === window.location.origin;
 
-  console.log("페이지 타입 체크:", {
-    url: currentUrl,
-    bodyClasses: Array.from(body.classList),
-    hasListClass: hasListClass,
-    hasSingleClass: hasSingleClass,
-    isRootUrl: isRootUrl,
-    isListPage: hasListClass || (isRootUrl && !hasSingleClass),
-  });
+  console.log("URL 확인:");
+  console.log("- 루트 URL:", isRootUrl);
 
-  // 목록 페이지 클래스가 있거나, 루트 URL이면서 단일 포스팅 클래스가 없으면 목록 페이지
-  return hasListClass || (isRootUrl && !hasSingleClass);
+  // 목록 페이지 판단 (매우 엄격하게)
+  const isListPageResult = isHomePage && isRootUrl;
+
+  console.log("최종 판단:");
+  console.log("- 목록 페이지:", isListPageResult);
+  console.log("- 배너 표시:", !isListPageResult);
+  console.log("=====================================");
+
+  return isListPageResult;
 }
 
 // 글 목록 페이지이면 스크립트 종료
@@ -79,7 +90,7 @@ function checkTimeAndUpdate() {
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
 // 포스팅 글에만 배너가 나오도록 설정
-let paragraphs = document.querySelectorAll("p");
+let paragraphs = document.querySelectorAll(".entry-content p");
 
 let paragraphCount = paragraphs.length;
 
