@@ -1,68 +1,3 @@
-// 글 목록 페이지인지 확인 (배너 숨김용)
-function isListPage() {
-  const body = document.body;
-  const currentUrl = window.location.href;
-
-  // 모든 디버깅 정보 출력
-  console.log("=== 배너 표시 디버깅 정보 ===");
-  console.log("현재 URL:", currentUrl);
-  console.log("모든 body 클래스:", Array.from(body.classList));
-
-  // 1. 확실한 홈페이지/목록 페이지 확인
-  const isHomePage = body.classList.contains("home");
-  const isArchivePage = body.classList.contains("archive");
-  const isCategoryPage = body.classList.contains("category");
-  const isTagPage = body.classList.contains("tag");
-  const isSearchPage = body.classList.contains("search");
-  const isAuthorPage = body.classList.contains("author");
-
-  console.log("페이지 타입 확인:");
-  console.log("- 홈페이지:", isHomePage);
-  console.log("- 아카이브:", isArchivePage);
-  console.log("- 카테고리:", isCategoryPage);
-  console.log("- 태그:", isTagPage);
-  console.log("- 검색:", isSearchPage);
-  console.log("- 작성자:", isAuthorPage);
-
-  // 2. 단일 포스팅 페이지 확인
-  const isSinglePost = body.classList.contains("single-post");
-  const isSingle = body.classList.contains("single");
-  const hasPostId = Array.from(body.classList).some((cls) =>
-    cls.startsWith("postid-")
-  );
-
-  console.log("단일 포스팅 확인:");
-  console.log("- single-post 클래스:", isSinglePost);
-  console.log("- single 클래스:", isSingle);
-  console.log("- postid- 클래스:", hasPostId);
-
-  // 3. URL 패턴 확인
-  const isRootUrl =
-    currentUrl === window.location.origin + "/" ||
-    currentUrl === window.location.origin;
-
-  console.log("URL 확인:");
-  console.log("- 루트 URL:", isRootUrl);
-
-  // 목록 페이지 판단 (매우 엄격하게)
-  const isListPageResult = isHomePage && isRootUrl;
-
-  console.log("최종 판단:");
-  console.log("- 목록 페이지:", isListPageResult);
-  console.log("- 배너 표시:", !isListPageResult);
-  console.log("=====================================");
-
-  return isListPageResult;
-}
-
-// 글 목록 페이지이면 스크립트 종료
-if (isListPage()) {
-  console.log("🚫 쿠팡 배너: 글 목록 페이지이므로 배너를 표시하지 않습니다.");
-  return;
-}
-
-console.log("✅ 쿠팡 배너: 단일 포스팅 페이지이므로 배너를 표시합니다.");
-
 // 현재 시간(초 단위) 가져오기
 function getCurrentTimestamp() {
   return Math.floor(Date.now() / 1000);
@@ -90,7 +25,7 @@ function checkTimeAndUpdate() {
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
 // 포스팅 글에만 배너가 나오도록 설정
-let paragraphs = document.querySelectorAll(".entry-content p");
+let paragraphs = document.querySelectorAll("p");
 
 let paragraphCount = paragraphs.length;
 
