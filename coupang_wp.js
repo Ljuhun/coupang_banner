@@ -24,7 +24,7 @@ function checkTimeAndUpdate() {
 // 1초마다 체크하여 10초 후 자동 업데이트
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
-let paragraphs = document.querySelectorAll(".p");
+let paragraphs = document.querySelectorAll("p");
 
 let paragraphCount = paragraphs.length;
 
