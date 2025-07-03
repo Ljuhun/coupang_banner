@@ -24,19 +24,7 @@ function checkTimeAndUpdate() {
 // 1초마다 체크하여 10초 후 자동 업데이트
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
-// 포스팅 글에만 배너가 나오도록 설정
-if (!document.body.classList.contains("single-post")) {
-  return;
-}
-
-// 여러 선택자 시도
 let paragraphs = document.querySelectorAll(".tt_article_useless_p_margin p");
-if (paragraphs.length === 0) {
-  paragraphs = document.querySelectorAll("article p");
-}
-if (paragraphs.length === 0) {
-  paragraphs = document.querySelectorAll(".entry-content p");
-}
 
 let paragraphCount = paragraphs.length;
 
