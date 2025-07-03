@@ -25,7 +25,7 @@ function checkTimeAndUpdate() {
 let interval = setInterval(checkTimeAndUpdate, 1000);
 
 // 포스팅 글에만 배너가 나오도록 설정
-let paragraphs = document.querySelectorAll(".post > div > div > p");
+let paragraphs = document.querySelectorAll(".entry-content p");
 
 let paragraphCount = paragraphs.length;
 
