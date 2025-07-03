@@ -1,63 +1,57 @@
-// 워드프레스 단일 포스팅에서만 실행하도록 체크
-function isWordPressSinglePost() {
-  // 1. 워드프레스 body 클래스 확인
+// 글 목록 페이지에서만 배너를 숨기는 함수
+function isListPage() {
+  // 1. 확실한 글 목록 페이지 body 클래스 확인
   const body = document.body;
-  const hasPostClass =
-    body.classList.contains("single-post") ||
-    body.classList.contains("single") ||
-    body.classList.contains("postid-");
-
-  // 2. URL 패턴 확인 (일반적인 워드프레스 URL 구조)
-  const currentUrl = window.location.href;
-  const urlPatterns = [
-    /\/\d{4}\/\d{2}\/\d{2}\//, // 날짜 기반 URL: /2023/12/01/
-    /\/[^\/]+\/$/, // 일반 포스팅: /post-title/
-    /\?p=\d+/, // 쿼리 파라미터: ?p=123
-    /\/\d+\/$/, // 숫자 기반: /123/
+  const listPageClasses = [
+    "home",
+    "blog",
+    "archive",
+    "category",
+    "tag",
+    "search",
+    "author",
   ];
 
-  const urlMatch = urlPatterns.some((pattern) => pattern.test(currentUrl));
+  const hasListClass = listPageClasses.some((className) =>
+    body.classList.contains(className)
+  );
 
-  // 3. 글 목록 페이지 요소 확인 (이런 요소들이 있으면 목록 페이지)
+  // 2. URL이 루트 도메인이거나 명확한 목록 페이지 URL인지 확인
+  const currentUrl = window.location.href;
+  const isRootUrl =
+    currentUrl.endsWith("/") && currentUrl.split("/").length <= 4;
+
+  // 3. 글 목록 페이지의 확실한 특징 요소 확인
   const listPageElements = [
     ".posts-navigation",
     ".pagination",
-    ".post-navigation",
-    ".nav-links",
     ".page-numbers",
-    ".post-list",
-    ".entry-summary", // 요약이 있으면 목록 페이지일 가능성 높음
-    ".more-link",
+    ".nav-links",
   ];
 
   const hasListElements = listPageElements.some(
     (selector) => document.querySelector(selector) !== null
   );
 
-  // 4. 포스팅 개수 확인 (여러 개의 article이 있으면 목록 페이지)
-  const articles = document.querySelectorAll("article, .post, .entry");
-  const multipleArticles = articles.length > 1;
+  // 4. 여러 개의 글 제목이 있는지 확인 (h2, h3 제목이 3개 이상이면 목록 페이지)
+  const titles = document.querySelectorAll("h1, h2, h3");
+  const multipleTitles = titles.length >= 3;
 
-  // 5. 페이지 제목 확인
-  const pageTitle = document.title;
-  const isHomePage =
-    pageTitle.includes("홈") ||
-    pageTitle.includes("Home") ||
-    pageTitle.includes("메인") ||
-    pageTitle.includes("Main");
+  console.log("배너 표시 체크:", {
+    hasListClass,
+    isRootUrl,
+    hasListElements,
+    multipleTitles,
+    url: currentUrl,
+  });
 
-  // 목록 페이지 요소가 있거나 여러 개의 글이 있거나 홈페이지면 false
-  if (hasListElements || multipleArticles || isHomePage) {
-    return false;
-  }
-
-  // body 클래스가 있거나 URL 패턴이 맞으면 true
-  return hasPostClass || urlMatch;
+  // 위 조건 중 하나라도 만족하면 목록 페이지로 판단
+  return hasListClass || isRootUrl || hasListElements || multipleTitles;
 }
 
-// 단일 포스팅이 아니면 스크립트 실행 중단
-if (!isWordPressSinglePost()) {
-  console.log("쿠팡 배너: 단일 포스팅이 아니므로 배너를 표시하지 않습니다.");
+// 글 목록 페이지이면 스크립트 실행 중단
+if (isListPage()) {
+  console.log("쿠팡 배너: 글 목록 페이지이므로 배너를 표시하지 않습니다.");
   return;
 }
 
