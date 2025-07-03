@@ -29,8 +29,14 @@ if (!document.body.classList.contains("single-post")) {
   return;
 }
 
-// 원본 선택자 사용
+// 여러 선택자 시도
 let paragraphs = document.querySelectorAll(".tt_article_useless_p_margin p");
+if (paragraphs.length === 0) {
+  paragraphs = document.querySelectorAll("article p");
+}
+if (paragraphs.length === 0) {
+  paragraphs = document.querySelectorAll(".entry-content p");
+}
 
 let paragraphCount = paragraphs.length;
 
